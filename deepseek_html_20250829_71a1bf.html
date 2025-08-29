@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criatura Falante</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .social {
+            font-size: 1.2rem;
+            color: #fdbb2d;
+        }
+        
+        .creature {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            margin-bottom: 40px;
+        }
+        
+        .head {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(145deg, #1a2a6c, #4a569d);
+            border-radius: 50%;
+            top: 0;
+            left: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            border: 2px solid #fdbb2d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .eye {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background-color: #fdbb2d;
+            border-radius: 50%;
+            top: 50px;
+            border: 2px solid #1a2a6c;
+            box-shadow: 0 0 15px #fdbb2d;
+            animation: blink 4s infinite;
+        }
+        
+        .eye-left {
+            left: 40px;
+        }
+        
+        .eye-right {
+            right: 40px;
+        }
+        
+        .mouth {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            background-color: transparent;
+            border-bottom: 4px solid #fdbb2d;
+            border-radius: 0 0 40px 40px;
+            bottom: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .body {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(145deg, #b21f1f, #dd5e5e);
+            border-radius: 100px 100px 40px 40px;
+            top: 150px;
+            left: 25px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            border: 2px solid #fdbb2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .heart {
+            font-size: 40px;
+            color: #fdbb2d;
+            animation: pulse 2s infinite;
+        }
+        
+        .speech-bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 15px;
+            color: #1a2a6c;
+            font-weight: bold;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 20;
+            top: -80px;
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 400px;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            color: #fdbb2d;
+            font-size: 24px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes blink {
+            0%, 95%, 98%, 100% {
+                height: 40px;
+            }
+            96%, 97% {
+                height: 5px;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Criatura Carinhosa</h1>
+            <div class="social">Siga @programadorDesignerPro</div>
+        </div>
+        
+        <div class="creature">
+            <div class="speech-bubble" id="speech"></div>
+            
+            <div class="head">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+                <div class="mouth"></div>
+            </div>
+            
+            <div class="body">
+                <div class="heart">❤️</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p>Clique em qualquer lugar da tela para a criatura falar!</p>
+            <p>Ela tem muitas mensagens carinhosas para você 💖</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const speechBubble = document.getElementById('speech');
+            const mouth = document.querySelector('.mouth');
+            const head = document.querySelector('.head');
+            const body = document.querySelector('.body');
+            
+            // Lista de falas carinhosas
+            const messages = [
+                "Oi princesa! 💖",
+                "Sabia que eu te amo muito?",
+                "Eu te amo muito mais!",
+                "Você é a pessoa mais especial do mundo!",
+                "Seu sorriso ilumina meus dias!",
+                "Nada me faz mais feliz que você!",
+                "Você é meu maior sonho realizado!",
+                "Cada momento contigo é especial!",
+                "Meu coração é todo seu!",
+                "Você é a razão do meu sorriso!",
+                "Eternamente grato por ter você!",
+                "Seu amor é minha força!",
+                "Nunca vou me cansar de te amar!",
+                "Você é perfeita do jeito que é!",
+                "Meu amor por você é infinito!",
+                "Você é a melhor coisa da minha vida!",
+                "Amo cada detalhe seu!",
+                "Você deixa tudo mais bonito!",
+                "Minha vida começou quando te conheci!",
+                "Não existem palavras para expressar o quanto te amo!"
+            ];
+            
+            // Função para mostrar uma fala aleatória
+            function showRandomMessage() {
+                // Selecionar uma mensagem aleatória
+                const randomIndex = Math.floor(Math.random() * messages.length);
+                const message = messages[randomIndex];
+                
+                // Mostrar no balão de fala
+                speechBubble.textContent = message;
+                speechBubble.style.opacity = '1';
+                
+                // Animação da boca
+                mouth.style.height = '10px';
+                mouth.style.width = '70px';
+                
+                // Animação da cabeça
+                head.style.transform = 'translateY(-5px)';
+                
+                // Criar corações flutuantes
+                createHearts();
+                
+                // Esconder a fala após alguns segundos
+                setTimeout(() => {
+                    speechBubble.style.opacity = '0';
+                    mouth.style.height = '20px';
+                    mouth.style.width = '60px';
+                    head.style.transform = 'translateY(0)';
+                }, 4000);
+            }
+            
+            // Criar corações flutuantes
+            function createHearts() {
+                for (let i = 0; i < 5; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animation = `float ${3 + Math.random() * 2}s linear`;
+                    document.body.appendChild(heart);
+                    
+                    // Remover após a animação
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }
+            }
+            
+            // Clique em qualquer lugar da tela
+            document.addEventListener('click', function(e) {
+                showRandomMessage();
+                
+                // Efeito visual no local do clique
+                const clickEffect = document.createElement('div');
+                clickEffect.className = 'floating-heart';
+                clickEffect.textContent = '💖';
+                clickEffect.style.left = e.clientX + 'px';
+                clickEffect.style.top = e.clientY + 'px';
+                clickEffect.style.animation = `float ${2 + Math.random() * 2}s linear`;
+                document.body.appendChild(clickEffect);
+                
+                // Remover após a animação
+                setTimeout(() => {
+                    clickEffect.remove();
+                }, 4000);
+            });
+            
+            // Mostrar uma mensagem inicial após um tempo
+            setTimeout(() => {
+                showRandomMessage();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
